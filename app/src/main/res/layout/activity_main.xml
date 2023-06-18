@@ -20,6 +20,7 @@
     <kr.co.bullets.part2chapter2r.WaveformView
         android:id="@+id/waveform_view"
         android:layout_width="0dp"
+        android:background="#FFE4E4E4"
         android:layout_height="250dp"
         app:layout_constraintBottom_toTopOf="@id/record_button"
         app:layout_constraintEnd_toEndOf="parent"

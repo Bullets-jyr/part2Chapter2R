@@ -16,7 +16,8 @@ class WaveformView @JvmOverloads constructor(context: Context, attrs: AttributeS
         color = Color.RED
     }
 
-    private val rectWidth = 10f
+//    private val rectWidth = 10f
+    private val rectWidth = 15f
     private var tick = 0
 
     override fun onDraw(canvas: Canvas?) {
@@ -29,7 +30,14 @@ class WaveformView @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     fun addAmplitude(maxAmplitude: Float) {
-        ampList.add(maxAmplitude / 2)
+        val height = this.height
+
+        // 0 ~ 1
+        // (maxAmplitude / Short.MAX_VALUE)
+        val amplitude = (maxAmplitude / Short.MAX_VALUE) * height * 0.8f
+
+//        ampList.add(maxAmplitude)
+        ampList.add(amplitude)
         rectList.clear()
 
 //        val rectWidth = 10f
@@ -40,10 +48,13 @@ class WaveformView @JvmOverloads constructor(context: Context, attrs: AttributeS
         for ((i, amp) in amps.withIndex()) {
             val rectF = RectF()
 
-            rectF.top = 0f
-            rectF.bottom = amp
+//            rectF.top = 0f
+            rectF.top = (this.height / 2) - amp / 2
+//            rectF.bottom = amp
+            rectF.bottom = rectF.top + amp
             rectF.left = i * rectWidth
-            rectF.right = rectF.left + rectWidth
+//            rectF.right = rectF.left + rectWidth
+            rectF.right = rectF.left + (rectWidth - 5f)
 
             rectList.add(rectF)
         }
@@ -67,10 +78,13 @@ class WaveformView @JvmOverloads constructor(context: Context, attrs: AttributeS
         for ((i, amp) in amps.withIndex()) {
             val rectF = RectF()
 
-            rectF.top = 0f
-            rectF.bottom = amp
+//            rectF.top = 0f
+            rectF.top = (this.height / 2) - amp / 2
+//            rectF.bottom = amp
+            rectF.bottom = rectF.top + amp
             rectF.left = i * rectWidth
-            rectF.right = rectF.left + rectWidth
+//            rectF.right = rectF.left + rectWidth
+            rectF.right = rectF.left + (rectWidth - 5f)
 
             rectList.add(rectF)
         }
