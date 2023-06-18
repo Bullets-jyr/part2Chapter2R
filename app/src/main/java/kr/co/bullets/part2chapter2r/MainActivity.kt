@@ -3,22 +3,21 @@ package kr.co.bullets.part2chapter2r
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kr.co.bullets.part2chapter2r.databinding.ActivityMainBinding
 import java.io.IOException
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnTimerTickListener {
     private lateinit var binding: ActivityMainBinding
 
     companion object {
@@ -37,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     private var state: State = State.RELEASE
 
     private var player: MediaPlayer? = null
+
+    private lateinit var timer: Timer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +81,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        timer = Timer(this)
     }
 
     private fun record() {
@@ -162,6 +165,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        timer.start()
+
         binding.recordButton.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
@@ -182,6 +187,7 @@ class MainActivity : AppCompatActivity() {
             release()
         }
         recorder = null
+        timer.stop()
         state = State.RELEASE
 
         binding.recordButton.setImageDrawable(
@@ -287,5 +293,9 @@ class MainActivity : AppCompatActivity() {
                 showPermissionSettingDialog()
             }
         }
+    }
+
+    override fun onTick(duration: Long) {
+        binding.waveformView.addAmplitude(recorder?.maxAmplitude?.toFloat() ?: 0f)
     }
 }

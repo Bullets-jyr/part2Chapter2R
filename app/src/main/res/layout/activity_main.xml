@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <kr.co.bullets.part2chapter2r.WaveformView
         android:id="@+id/waveform_view"
         android:layout_width="0dp"
         android:layout_height="250dp"
